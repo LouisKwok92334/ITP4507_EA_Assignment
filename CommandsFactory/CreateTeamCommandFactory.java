@@ -1,22 +1,21 @@
 package CommandsFactory;
 
 import Commands.*;
-import STMS.*;
 import STMSFactory.*;
 import java.util.*;
 
 public class CreateTeamCommandFactory implements CommandFactory {
     private Scanner sc;
     private Vector teams;
+    private Vector currentTeam;
     private Stack commands;
     private TeamFactory teamFactory;
-    private TeamManager teamManager;
 
-    public CreateTeamCommandFactory(Scanner sc, Vector teams, Stack commands, TeamManager teamManager) {
+    public CreateTeamCommandFactory(Scanner sc, Vector teams, Stack commands, Vector currentTeam) {
         this.sc = sc;
         this.teams = teams;
         this.commands = commands;
-        this.teamManager = teamManager;
+        this.currentTeam = currentTeam;
     }
 
     public Command createCommand() {
@@ -37,7 +36,7 @@ public class CreateTeamCommandFactory implements CommandFactory {
             throw new IllegalArgumentException("Invalid team type: " + teamType);
         }
 
-        Command com = new CreateTeamCommand(teamFactory, teamType, teams, teamID, teamName, teamManager);
+        Command com = new CreateTeamCommand(teamFactory, teamType, teams, teamID, teamName, currentTeam);
         commands.push(com);
         return com;
     }
