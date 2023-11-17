@@ -5,33 +5,42 @@ import STMSFactory.*;
 import java.util.*;
 
 public class CreateTeamCommand implements Command {
-    private String teamID;
-    private String teamName;
-    private String teamType;
-    private Vector teams;
-    private Vector currentTeam;
+    private final Scanner sc;
+    private final Vector<Team> teams;
+    private final Vector<Team> currentTeam;
+    private final HashMap<String, TeamFactory> teamFactories;
     private Team team;
-    private TeamFactory teamFactory;
 
-    public CreateTeamCommand(TeamFactory teamFactory, String teamType, Vector teams, String teamID, String teamName, Vector currentTeam) {
-        this.teamFactory = teamFactory;
-        this.teamType = teamType;
+    public CreateTeamCommand(Scanner sc, Vector<Team> teams, Vector<Team> currentTeam, HashMap<String, TeamFactory> teamFactories) {
+        this.sc = sc;
         this.teams = teams;
-        this.teamID = teamID;
-        this.teamName = teamName;
         this.currentTeam = currentTeam;
+        this.teamFactories = teamFactories;
         this.team = null;
     }
 
     @Override
     public void execute() {
-        Team team = teamFactory.createTeam(teamID, teamName);
-        System.out.println(teamType + " team is created.");
-        System.out.println("Current team is changed to " + teamID + ".");
-        this.team = team;
+        System.out.print("Enter team type (v = volleyball | f = football): ");
+        String teamType = sc.next().trim(); // Add trim() to remove any extra whitespace
+
+        TeamFactory teamFactory = teamFactories.get(teamType);
+        if (teamFactory == null) {
+            System.out.println("Invalid input, please try again!");
+            return;
+        }
+
+        System.out.print("Team ID: ");
+        String teamID = sc.next().trim();
+        System.out.print("Team Name: ");
+        String teamName = sc.next().trim();
+
+        team = teamFactory.createTeam(teamID, teamName);
         teams.add(team);
+
         if (currentTeam.size() == 0) {
             currentTeam.add(team);
+            System.out.println("Current team is changed to " + teamID + ".");
         }
     }
 
@@ -39,9 +48,9 @@ public class CreateTeamCommand implements Command {
     public void undo() {
         if (team != null){
             teams.remove(team);
-        }
-        if (currentTeam.size() == 1 && currentTeam.get(0) == team) {
-            currentTeam.remove(0);
+            if (currentTeam.size() == 1 && currentTeam.get(0) == team) {
+                currentTeam.remove(0);
+            }
         }
     }
 
@@ -49,9 +58,9 @@ public class CreateTeamCommand implements Command {
     public void redo() {
         if (team != null){
             teams.add(team);
-        }
-        if (currentTeam.size() == 0) {
-            currentTeam.add(team);
+            if (currentTeam.size() == 0) {
+                currentTeam.add(team);
+            }
         }
     }
 }

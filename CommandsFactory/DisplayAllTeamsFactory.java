@@ -1,19 +1,18 @@
 package CommandsFactory;
 
 import Commands.*;
+import STMS.*;
 import java.util.*;
 
 public class DisplayAllTeamsFactory implements CommandFactory{
+    private final Vector<Team> teams;
 
-    private Vector teams;
-
-    public DisplayAllTeamsFactory(Vector teams) {
+    public DisplayAllTeamsFactory(Vector<Team> teams) {
         this.teams = teams;
     }
 
     @Override
     public Command createCommand() {
-        Command com = new DisplayAllTeamsCommand(teams);
-        return com;
+        return new DisplayAllTeamsCommand(teams);
     }
 }

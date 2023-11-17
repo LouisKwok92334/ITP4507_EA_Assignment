@@ -4,17 +4,17 @@ import java.util.*;
 
 public class RedoCommand implements Command {
 
-    private Stack commands;
-    private Stack redos;
+    private final Stack<Command> commands;
+    private final Stack<Command> redos;
 
-    public RedoCommand(Stack commands, Stack redos){
+    public RedoCommand(Stack<Command> commands, Stack<Command> redos){
         this.commands = commands;
         this.redos = redos;
     }
 
     public void execute(){
         if (redos.size() > 0){
-            Command com = (Command) redos.pop();
+            Command com = redos.pop();
             com.redo();
             commands.push(com);
         } else {

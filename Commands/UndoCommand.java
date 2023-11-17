@@ -4,17 +4,17 @@ import java.util.*;
 
 public class UndoCommand implements Command{
 
-    private Stack commands;
-    private Stack redos;
+    private final Stack<Command> commands;
+    private final Stack<Command> redos;
 
-    public UndoCommand(Stack commands, Stack redos){
+    public UndoCommand(Stack<Command> commands, Stack<Command> redos){
         this.commands = commands;
         this.redos = redos;
     }
 
     public void execute(){
         if (commands.size() > 0){
-            Command com = (Command) commands.pop();
+            Command com = commands.pop();
             com.undo();
             redos.push(com);
         } else {

@@ -11,20 +11,25 @@ public class Main {
         Vector<Team> teams = new Vector<>(); // a vector to store all Team
         Vector<Team> currentTeam = new Vector<>(); // a vector to store current Team
         Stack<Command> commands = new Stack<>(); // a stack to store the executed commands (for undo)
-        Stack redos = new Stack<>(); // a stack to store the commands which were undid (for redo)
-
-        String command;
+        Stack<Command> redos = new Stack<>(); // a stack to store the commands which were undid (for redo)
 
         // use a HashMap to store the command factories
         HashMap<String, CommandFactory> commandFactories = new HashMap<String, CommandFactory>();
         commandFactories.put("x", new ExitCommandFactory());
         commandFactories.put("u", new UndoCommandFactory(commands, redos));
         commandFactories.put("r", new RedoCommandFactory(commands, redos));
-        commandFactories.put("c", new CreateTeamCommandFactory(sc, teams, commands, currentTeam));
-        commandFactories.put("g", new SetCurrentTeamCommandFactory(sc, teams, commands, currentTeam));
+        commandFactories.put("c", new CreateTeamCommandFactory(sc, teams, currentTeam, commands, redos));
+        commandFactories.put("g", new SetCurrentTeamCommandFactory(sc, teams, currentTeam, commands, redos));
+        commandFactories.put("a", new AddPlayerCommandFactory(sc, currentTeam, commands, redos));
+        commandFactories.put("d", new DeletePlayerCommandFactory(sc, currentTeam, commands, redos));
+        commandFactories.put("l", new ListUndosAndRedosCommandFactory(sc, currentTeam, commands, redos));
+        commandFactories.put("s", new ShowTeamCommandFactory(currentTeam));
         commandFactories.put("p", new DisplayAllTeamsFactory(teams));
+        //m, t
 
+        String command;
         Command com;
+
         while (true) {
             System.out.println("Sport Teams Management System (STMS)");
             if (!currentTeam.isEmpty()) {

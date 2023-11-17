@@ -9,6 +9,7 @@ public abstract class Team {
 
     public Team(String teamID) {
         this.teamID = teamID;
+        players = new Vector<>();
     }
 
     public String getTeamID() {

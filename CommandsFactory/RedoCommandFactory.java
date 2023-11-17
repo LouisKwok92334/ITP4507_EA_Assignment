@@ -5,17 +5,16 @@ import Commands.*;
 
 public class RedoCommandFactory implements CommandFactory {
 
-    private Stack commands;
-    private Stack redos;
+    private final Stack<Command> commands;
+    private final Stack<Command> redos;
 
-    public RedoCommandFactory(Stack commands, Stack redos){
+    public RedoCommandFactory(Stack<Command> commands, Stack<Command> redos){
         this.commands = commands;
         this.redos = redos;
     }
 
     public Command createCommand(){
-        Command com = new RedoCommand(commands, redos);
-        return com;
-    };
+        return new RedoCommand(commands, redos);
+    }
 }
 

@@ -3,10 +3,10 @@ package STMSFactory;
 import STMS.*;
 
 public class PlayerFactory {
-    private static int idCounter = 1;
-
-    public static Player createPlayer(String name) {
-        Player player = new Player(Integer.toString(idCounter++), name);
+    public static Player createPlayer(String id, String name, int position) {
+        Player player = new Player(id, name);
+        player.setName(name);
+        player.setPosition(position);
         return player;
     }
 }

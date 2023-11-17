@@ -5,17 +5,15 @@ import Commands.*;
 
 public class UndoCommandFactory implements CommandFactory{
 
-    private Stack commands;
-    private Stack redos;
+    private final Stack<Command> commands;
+    private final Stack<Command> redos;
 
-    public UndoCommandFactory(Stack commands, Stack redos){
+    public UndoCommandFactory(Stack<Command> commands, Stack<Command> redos){
         this.commands = commands;
         this.redos = redos;
     }
 
     public Command createCommand(){
-        Command com = new UndoCommand(commands, redos);
-        return com;
-    };
-
+        return new UndoCommand(commands, redos);
+    }
 }

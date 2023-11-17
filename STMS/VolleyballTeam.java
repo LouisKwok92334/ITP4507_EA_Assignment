@@ -2,7 +2,7 @@ package STMS;
 
 import java.util.*;
 
-public class VolleyballTeam extends Team{
+public class VolleyballTeam extends Team {
     private final int ATTACKER_POSITION = 1;
     private final int DEFENDER_POSITION = 2;
 
@@ -10,39 +10,61 @@ public class VolleyballTeam extends Team{
         super(teamID);
     }
 
-    @Override
     public void updatePlayerPosition() {
-        Enumeration<Player> enumeration = getAllPlayers();
-        while (enumeration.hasMoreElements()) {
-            Player player = enumeration.nextElement();
-            if (player.getPosition() == ATTACKER_POSITION) {
-                player.setPosition(DEFENDER_POSITION);
-            } else if (player.getPosition() == DEFENDER_POSITION) {
-                player.setPosition(ATTACKER_POSITION);
+        Scanner sc = new Scanner(System.in);
+        String input;
+        Enumeration<Player> players = getAllPlayers();
+        Player player = null;
+
+        System.out.print("Please input player ID: ");
+        input = sc.nextLine();
+
+        while (players.hasMoreElements()) {
+            player = players.nextElement();
+            int position_index;
+
+            if (player.getPlayerID().equals(input)) {
+                String positions = "ATTACKER_POSITION = 1, DEFENDER_POSITION = 2";
+
+                while (true) {
+                    System.out.print(positions + ", please input position index: ");
+                    input = sc.nextLine();
+
+                    try {
+                        position_index = Integer.parseInt(input);
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("Invalid input, please try again!");
+                    }
+                }
+                player.setPosition(position_index - 1);
+                System.out.println("Updated Successfully!");
+
+                break;
             }
+        }
+        if (player == null) {
+            System.out.println("Player not found!");
         }
     }
 
-    @Override
     public void displayTeam() {
-        System.out.println("Volleyball Team " + getTeamID() + " (" + getName() + ")");
+        String[] positions = { "Attackers", "Defenders" };
+        String[] players = new String[positions.length];
+        Arrays.fill(players, "");
 
-        System.out.println("Attackers:");
-        Enumeration<Player> attackers = getAllPlayers();
-        while (attackers.hasMoreElements()) {
-            Player player = attackers.nextElement();
-            if (player.getPosition() == ATTACKER_POSITION) {
-                System.out.println(player.getPlayerID() + ", " + player.getName());
-            }
+        Enumeration<Player> allPlayers = getAllPlayers();
+        Player player;
+
+        while (allPlayers.hasMoreElements()) {
+            player = allPlayers.nextElement();
+            players[player.getPosition() - 1] += "\n" + player.getPlayerID() + ", " + player.getName();
         }
 
-        System.out.println("Defenders:");
-        Enumeration<Player> defenders = getAllPlayers();
-        while (defenders.hasMoreElements()) {
-            Player player = defenders.nextElement();
-            if (player.getPosition() == DEFENDER_POSITION) {
-                System.out.println(player.getPlayerID() + ", " + player.getName());
-            }
+        System.out.print("Volleyball Team " + getTeamID() + " (" + getName() + ")");
+
+        for (int i = 0; i < positions.length; i++) {
+            System.out.println("\n" + positions[i] + ":" + players[i]);
         }
     }
 }

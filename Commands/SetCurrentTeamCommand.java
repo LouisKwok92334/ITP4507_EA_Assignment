@@ -4,24 +4,32 @@ import STMS.*;
 import java.util.*;
 
 public class SetCurrentTeamCommand implements Command {
-    private Vector teams;
-    private Vector currentTeam;
+    private final Scanner sc;
+    private final Vector<Team> teams;
+    private final Vector<Team> currentTeam;
     private String teamID;
-    private Team previousTeam;
+    private Team previousTeam; // Used to restore the previous state during an undo operation
 
-    public SetCurrentTeamCommand(Vector teams, Vector currentTeam, String teamID) {
+    public SetCurrentTeamCommand(Scanner sc, Vector<Team> teams, Vector<Team> currentTeam) {
+        this.sc = sc;
         this.teams = teams;
         this.currentTeam = currentTeam;
-        this.teamID = teamID;
     }
 
     @Override
     public void execute() {
-        if (!currentTeam.isEmpty()) {
-            previousTeam = (Team) currentTeam.elementAt(0);
-        }
-        for (int i = 0; i < teams.size(); i++) {
-            Team team = (Team) teams.elementAt(i);
+        System.out.print("Enter team ID: ");
+        teamID = sc.next().trim();
+
+        // Store the old current team for the undo operation
+        previousTeam = currentTeam.isEmpty() ? null : currentTeam.firstElement();
+
+        setTeamByID(teamID);
+    }
+
+    // Find and set the new current team based on the given ID
+    private void setTeamByID(String teamID) {
+        for (Team team : teams) {
             if (team.getTeamID().equals(teamID)) {
                 currentTeam.clear();
                 currentTeam.add(team);
@@ -34,9 +42,7 @@ public class SetCurrentTeamCommand implements Command {
 
     @Override
     public void undo() {
-        if (!currentTeam.isEmpty()) {
-            currentTeam.clear();
-        }
+        currentTeam.clear();
         if (previousTeam != null) {
             currentTeam.add(previousTeam);
         }
@@ -44,14 +50,8 @@ public class SetCurrentTeamCommand implements Command {
 
     @Override
     public void redo() {
-        for (int i = 0; i < teams.size(); i++) {
-            Team team = (Team) teams.elementAt(i);
-            if (team.getTeamID().equals(teamID)) {
-                currentTeam.clear();
-                currentTeam.add(team);
-                System.out.println("Current team is changed to " + teamID + ".");
-                return;
-            }
+        if (teamID != null) {
+            setTeamByID(teamID);
         }
     }
 }

@@ -2,7 +2,7 @@ package STMS;
 
 import java.util.*;
 
-public class FootballTeam extends Team{
+public class FootballTeam extends Team {
     private final int GOALKEEPER_POSITION = 1;
     private final int DEFENDER_POSITION = 2;
     private final int MIDFIELDER_POSITION = 3;
@@ -12,66 +12,61 @@ public class FootballTeam extends Team{
         super(teamID);
     }
 
-    @Override
     public void updatePlayerPosition() {
-        Enumeration<Player> enumeration = getAllPlayers();
-        while (enumeration.hasMoreElements()) {
-            Player player = enumeration.nextElement();
-            switch (player.getPosition()) {
-                case GOALKEEPER_POSITION:
-                    player.setPosition(DEFENDER_POSITION);
-                    break;
-                case DEFENDER_POSITION:
-                    player.setPosition(MIDFIELDER_POSITION);
-                    break;
-                case MIDFIELDER_POSITION:
-                    player.setPosition(FORWARD_POSITION);
-                    break;
-                case FORWARD_POSITION:
-                    player.setPosition(GOALKEEPER_POSITION);
-                    break;
+        Scanner sc = new Scanner(System.in);
+        String input;
+        Enumeration<Player> players = getAllPlayers();
+        Player player = null;
+
+        System.out.print("Please input player ID: ");
+        input = sc.nextLine();
+
+        while (players.hasMoreElements()) {
+            player = players.nextElement();
+            int position_index;
+
+            if (player.getPlayerID().equals(input)) {
+                String positions = "GOALKEEPER_POSITION = 1, DEFENDER_POSITION = 2, MIDFIELDER_POSITION = 3, FORWARD_POSITION = 4";
+
+                while (true) {
+                    System.out.print(positions + ", please input position index: ");
+                    input = sc.nextLine();
+
+                    try {
+                        position_index = Integer.parseInt(input);
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("Invalid input, please try again!");
+                    }
+                }
+                player.setPosition(position_index);
+                System.out.println("Updated Successfully!");
+
+                break;
             }
+        }
+        if (player == null) {
+            System.out.println("Player not found!");
         }
     }
 
-    @Override
     public void displayTeam() {
+        String[] positions = { "Goal keeper", "Defender", "Midfielder", "Forward" };
+        String[] players = new String[positions.length];
+        Arrays.fill(players, "");
+
+        Enumeration<Player> allPlayers = getAllPlayers();
+        Player player;
+
+        while (allPlayers.hasMoreElements()) {
+            player = allPlayers.nextElement();
+            players[player.getPosition() - 1] += "\n" + player.getPlayerID() + ", " + player.getName();
+        }
+
         System.out.println("Football Team " + getTeamID() + " (" + getName() + ")");
 
-        System.out.println("Goal keeper:");
-        Enumeration<Player> enumeration = getAllPlayers();
-        while (enumeration.hasMoreElements()) {
-            Player player = enumeration.nextElement();
-            if (player.getPosition() == GOALKEEPER_POSITION) {
-                System.out.println(player.getPlayerID() + ", " + player.getName());
-            }
-        }
-
-        System.out.println("Defender:");
-        enumeration = getAllPlayers();
-        while (enumeration.hasMoreElements()) {
-            Player player = enumeration.nextElement();
-            if (player.getPosition() == DEFENDER_POSITION) {
-                System.out.println(player.getPlayerID() + ", " + player.getName());
-            }
-        }
-
-        System.out.println("Midfielder:");
-        enumeration = getAllPlayers();
-        while (enumeration.hasMoreElements()) {
-            Player player = enumeration.nextElement();
-            if (player.getPosition() == MIDFIELDER_POSITION) {
-                System.out.println(player.getPlayerID() + ", " + player.getName());
-            }
-        }
-
-        System.out.println("Forward:");
-        enumeration = getAllPlayers();
-        while (enumeration.hasMoreElements()) {
-            Player player = enumeration.nextElement();
-            if (player.getPosition() == FORWARD_POSITION) {
-                System.out.println(player.getPlayerID() + ", " + player.getName());
-            }
+        for (int i = 0; i < positions.length; i++) {
+            System.out.println("\n" + positions[i] + ":" + players[i]);
         }
     }
 }

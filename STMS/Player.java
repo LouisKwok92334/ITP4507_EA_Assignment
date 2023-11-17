@@ -8,6 +8,7 @@ public class Player {
     public Player(String id, String name) {
         this.playerID = id;
         this.name = name;
+        this.position = 1;
     }
 
     public String getPlayerID() {

@@ -4,16 +4,20 @@ import STMS.*;
 import java.util.*;
 
 public class DisplayAllTeamsCommand implements Command {
-    private Vector teams;
+    private final Vector<Team> teams;
 
-    public DisplayAllTeamsCommand(Vector teams) {
+    public DisplayAllTeamsCommand(Vector<Team> teams) {
         this.teams = teams;
     }
 
     @Override
     public void execute() {
-        for (int i = 0; i < teams.size(); i++) {
-            Team team = (Team) teams.elementAt(i);
+        if (teams.isEmpty()) {
+            System.out.println("No teams available to display.");
+            return;
+        }
+
+        for (Team team : teams) {
             if (team instanceof FootballTeam) {
                 System.out.println("Football Team " + team.getName() + " (" + team.getTeamID() + ")");
             } else if (team instanceof VolleyballTeam) {
