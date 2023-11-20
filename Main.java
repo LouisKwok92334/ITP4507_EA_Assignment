@@ -22,7 +22,7 @@ public class Main {
         commandFactories.put("g", new SetCurrentTeamCommandFactory(sc, teams, currentTeam, commands, redos));
         commandFactories.put("a", new AddPlayerCommandFactory(sc, currentTeam, commands, redos));
         commandFactories.put("d", new DeletePlayerCommandFactory(sc, currentTeam, commands, redos));
-        //commandFactories.put("l", new ListUndosAndRedosCommandFactory(sc, currentTeam, commands, redos));
+        //commandFactories.put("l", new ListUndosAndRedosCommandFactory(commands, redos));
         commandFactories.put("s", new ShowTeamCommandFactory(currentTeam));
         commandFactories.put("p", new DisplayAllTeamsFactory(teams));
         //m, t
