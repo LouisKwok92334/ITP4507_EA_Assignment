@@ -15,6 +15,8 @@ public class RedoCommand implements Command {
     public void execute(){
         if (redos.size() > 0){
             Command com = redos.pop();
+            System.out.println("Command (" + com + ") is redone.");
+
             com.redo();
             commands.push(com);
         } else {

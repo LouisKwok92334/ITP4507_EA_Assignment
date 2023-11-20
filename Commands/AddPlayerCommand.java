@@ -7,11 +7,13 @@ import java.util.*;
 public class AddPlayerCommand implements Command {
     private final Scanner sc;
     private final Vector<Team> currentTeam;
+    private final PlayerFactory playerFactory;
     private Player player;
 
-    public AddPlayerCommand(Scanner sc, Vector<Team> currentTeam) {
+    public AddPlayerCommand(Scanner sc, Vector<Team> currentTeam, PlayerFactory playerFactory) {
         this.sc = sc;
         this.currentTeam = currentTeam;
+        this.playerFactory = playerFactory;
         this.player = null;
     }
 
@@ -43,7 +45,7 @@ public class AddPlayerCommand implements Command {
         System.out.print("Position (1 = attacker | 2 = defender ):- ");
         int position = sc.nextInt();
 
-        player = PlayerFactory.createPlayer(id, name, position);
+        player = playerFactory.createPlayer(id, name, position);
         currentTeam.get(0).addPlayer(player);
         System.out.println("Player is added.");
     }

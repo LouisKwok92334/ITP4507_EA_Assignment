@@ -1,4 +1,4 @@
-package Memento;
+package Mementos;
 
 import STMS.*;
 import java.util.*;

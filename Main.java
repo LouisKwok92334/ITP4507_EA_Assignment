@@ -22,7 +22,7 @@ public class Main {
         commandFactories.put("g", new SetCurrentTeamCommandFactory(sc, teams, currentTeam, commands, redos));
         commandFactories.put("a", new AddPlayerCommandFactory(sc, currentTeam, commands, redos));
         commandFactories.put("d", new DeletePlayerCommandFactory(sc, currentTeam, commands, redos));
-        commandFactories.put("l", new ListUndosAndRedosCommandFactory(sc, currentTeam, commands, redos));
+        //commandFactories.put("l", new ListUndosAndRedosCommandFactory(sc, currentTeam, commands, redos));
         commandFactories.put("s", new ShowTeamCommandFactory(currentTeam));
         commandFactories.put("p", new DisplayAllTeamsFactory(teams));
         //m, t
@@ -32,17 +32,22 @@ public class Main {
 
         while (true) {
             System.out.println("Sport Teams Management System (STMS)");
-            if (!currentTeam.isEmpty()) {
-                System.out.println("The current team is " + currentTeam.get(0).getTeamID() + " " + currentTeam.get(0).getName() + ".");
-            }
             System.out.println("""
                     c = create team, g = set current team, a = add player, m = modify player’s
                     position, d = delete player, s = show team, p = display all teams, t = change
                     team’s name, u = undo, r = redo, l = list undo/redo, x = exit system""");
+            if (!currentTeam.isEmpty()) {
+                System.out.println("The current team is " + currentTeam.get(0).getTeamID() + " " + currentTeam.get(0).getName() + ".");
+            }
             System.out.print("Please enter command [ c | g | a | m | d | s | p | t | u | r | l | x ] :-");
             command = sc.next();
-            com = commandFactories.get(command).createCommand();
-            com.execute();
+
+            try {
+                com = commandFactories.get(command).createCommand();
+                com.execute();
+            } catch (Exception e) {
+                System.out.println("Invalid input, please try again!");
+            }
         }
     }
 }

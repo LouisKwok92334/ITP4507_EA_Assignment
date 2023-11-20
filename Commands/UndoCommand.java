@@ -15,6 +15,8 @@ public class UndoCommand implements Command{
     public void execute(){
         if (commands.size() > 0){
             Command com = commands.pop();
+            System.out.println("Command (" + com + ") is undone.");
+
             com.undo();
             redos.push(com);
         } else {

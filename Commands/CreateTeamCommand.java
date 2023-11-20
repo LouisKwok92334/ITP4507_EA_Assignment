@@ -9,7 +9,11 @@ public class CreateTeamCommand implements Command {
     private final Vector<Team> teams;
     private final Vector<Team> currentTeam;
     private final HashMap<String, TeamFactory> teamFactories;
+    private TeamFactory teamFactory;
     private Team team;
+    private String type;
+    private String teamID;
+    private String teamName;
 
     public CreateTeamCommand(Scanner sc, Vector<Team> teams, Vector<Team> currentTeam, HashMap<String, TeamFactory> teamFactories) {
         this.sc = sc;
@@ -17,23 +21,26 @@ public class CreateTeamCommand implements Command {
         this.currentTeam = currentTeam;
         this.teamFactories = teamFactories;
         this.team = null;
+        this.type = null;
+        this.teamID = null;
+        this.teamName = null;
     }
 
     @Override
     public void execute() {
         System.out.print("Enter team type (v = volleyball | f = football): ");
-        String teamType = sc.next().trim(); // Add trim() to remove any extra whitespace
+        type = sc.next().trim().toLowerCase(); // Add trim() to remove any extra whitespace
 
-        TeamFactory teamFactory = teamFactories.get(teamType);
+        teamFactory = teamFactories.get(type);
         if (teamFactory == null) {
             System.out.println("Invalid input, please try again!");
             return;
         }
 
         System.out.print("Team ID: ");
-        String teamID = sc.next().trim();
+        teamID = sc.next().trim();
         System.out.print("Team Name: ");
-        String teamName = sc.next().trim();
+        teamName = sc.next().trim();
 
         team = teamFactory.createTeam(teamID, teamName);
         teams.add(team);
@@ -62,5 +69,11 @@ public class CreateTeamCommand implements Command {
                 currentTeam.add(team);
             }
         }
+    }
+
+    public String toString() {
+        String className = teamFactory.getClass().getSimpleName();
+        String sportType = className.replace("TeamFactory", "").toLowerCase();
+        return "Create " + sportType + " team, " + teamID + ", " + teamName;
     }
 }
