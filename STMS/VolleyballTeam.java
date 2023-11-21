@@ -61,7 +61,7 @@ public class VolleyballTeam extends Team {
             players[player.getPosition() - 1] += "\n" + player.getPlayerID() + ", " + player.getName();
         }
 
-        System.out.print("Volleyball Team " + getTeamID() + " (" + getName() + ")");
+        System.out.println("Volleyball Team " + getTeamID() + " (" + getName() + ")");
 
         for (int i = 0; i < positions.length; i++) {
             System.out.println("\n" + positions[i] + ":" + players[i]);

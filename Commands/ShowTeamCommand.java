@@ -12,6 +12,10 @@ public class ShowTeamCommand implements Command {
 
     @Override
     public void execute() {
+        if (currentTeam.isEmpty()) {
+            System.out.println("Please create a team first!");
+            return;
+        }
         currentTeam.get(0).displayTeam();
     }
 

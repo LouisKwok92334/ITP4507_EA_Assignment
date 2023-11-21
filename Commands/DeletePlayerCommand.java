@@ -51,4 +51,8 @@ public class DeletePlayerCommand implements Command {
     public void redo() {
         currentTeam.get(0).remove(player);
     }
+
+    public String toString() {
+        return "Delete player, " + player.getPlayerID();
+    }
 }

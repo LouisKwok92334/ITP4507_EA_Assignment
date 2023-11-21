@@ -13,17 +13,17 @@ public class UndoCommand implements Command{
     }
 
     public void execute(){
-        if (commands.size() > 0){
+        if (!commands.isEmpty()){
             Command com = commands.pop();
             System.out.println("Command (" + com + ") is undone.");
 
             com.undo();
             redos.push(com);
         } else {
-            System.out.println("Nothing to Undo");
+            System.out.println("Nothing to Undo!");
         }
     }
 
-    public void undo(){};
-    public void redo(){};
+    public void undo(){}
+    public void redo(){}
 }

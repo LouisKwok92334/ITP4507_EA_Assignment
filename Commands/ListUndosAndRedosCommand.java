@@ -13,18 +13,26 @@ public class ListUndosAndRedosCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Undo List");
+        String commandlist = "Undo List \n" + printList(commands, "") + "-- End of undo list -- \n";
+        commandlist += "Redo List \n" + printList(redos, "") + "-- End of redo list --";
 
-        System.out.println("-- End of undo list --");
+        System.out.println(commandlist);
+    }
+
+    public String printList(Stack<Command> stack, String string) {
+        if (stack.empty()) {
+            return "";
+        }
+        Command com = stack.pop();
+        string = printList(stack, string);
+
+        stack.push(com);
+        return string += com + "\n";
     }
 
     @Override
-    public void undo() {
-
-    }
+    public void undo() {}
 
     @Override
-    public void redo() {
-
-    }
+    public void redo() {}
 }

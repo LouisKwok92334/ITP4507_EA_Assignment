@@ -45,7 +45,7 @@ public class CreateTeamCommand implements Command {
         team = teamFactory.createTeam(teamID, teamName);
         teams.add(team);
 
-        if (currentTeam.size() == 0) {
+        if (currentTeam.isEmpty()) {
             currentTeam.add(team);
             System.out.println("Current team is changed to " + teamID + ".");
         }
@@ -65,7 +65,7 @@ public class CreateTeamCommand implements Command {
     public void redo() {
         if (team != null){
             teams.add(team);
-            if (currentTeam.size() == 0) {
+            if (currentTeam.isEmpty()) {
                 currentTeam.add(team);
             }
         }

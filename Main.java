@@ -1,5 +1,6 @@
 import Commands.*;
 import CommandsFactory.*;
+import Mementos.*;
 import STMS.*;
 
 import java.util.*;
@@ -12,6 +13,7 @@ public class Main {
         Vector<Team> currentTeam = new Vector<>(); // a vector to store current Team
         Stack<Command> commands = new Stack<>(); // a stack to store the executed commands (for undo)
         Stack<Command> redos = new Stack<>(); // a stack to store the commands which were undid (for redo)
+        Caretaker caretaker = new Caretaker(); // Prepare a Caretaker for the undo operation
 
         // use a HashMap to store the command factories
         HashMap<String, CommandFactory> commandFactories = new HashMap<String, CommandFactory>();
@@ -21,11 +23,12 @@ public class Main {
         commandFactories.put("c", new CreateTeamCommandFactory(sc, teams, currentTeam, commands, redos));
         commandFactories.put("g", new SetCurrentTeamCommandFactory(sc, teams, currentTeam, commands, redos));
         commandFactories.put("a", new AddPlayerCommandFactory(sc, currentTeam, commands, redos));
+        commandFactories.put("m", new ModifyPlayerPositionCommandFactory(sc, currentTeam, commands, redos, caretaker));
+        commandFactories.put("t", new ChangeTeamNameCommandFactory(sc, currentTeam, commands, redos, caretaker));
         commandFactories.put("d", new DeletePlayerCommandFactory(sc, currentTeam, commands, redos));
-        //commandFactories.put("l", new ListUndosAndRedosCommandFactory(commands, redos));
+        commandFactories.put("l", new ListUndosAndRedosCommandFactory(commands, redos));
         commandFactories.put("s", new ShowTeamCommandFactory(currentTeam));
         commandFactories.put("p", new DisplayAllTeamsFactory(teams));
-        //m, t
 
         String command;
         Command com;

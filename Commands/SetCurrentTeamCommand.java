@@ -18,6 +18,11 @@ public class SetCurrentTeamCommand implements Command {
 
     @Override
     public void execute() {
+        if (currentTeam.isEmpty()) {
+            System.out.println("Please create a team first!");
+            return;
+        }
+
         System.out.print("Enter team ID: ");
         teamID = sc.next().trim();
 

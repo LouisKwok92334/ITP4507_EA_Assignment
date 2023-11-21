@@ -13,7 +13,7 @@ public class RedoCommand implements Command {
     }
 
     public void execute(){
-        if (redos.size() > 0){
+        if (!redos.isEmpty()){
             Command com = redos.pop();
             System.out.println("Command (" + com + ") is redone.");
 
