@@ -21,11 +21,6 @@ public class ModifyPlayerPositionCommand implements Command {
 
     @Override
     public void execute() {
-        if (currentTeam.isEmpty()) {
-            System.out.println("Please create a team first!");
-            return;
-        }
-
         System.out.print("Please input player ID:- ");
         String playerID = sc.next();
 

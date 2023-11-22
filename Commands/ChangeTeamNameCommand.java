@@ -20,11 +20,6 @@ public class ChangeTeamNameCommand implements Command {
 
     @Override
     public void execute() {
-        if (currentTeam.isEmpty()) {
-            System.out.println("Please create a team first!");
-            return;
-        }
-
         System.out.print("Please input new name of the current team:- ");
         name = sc.next();
 

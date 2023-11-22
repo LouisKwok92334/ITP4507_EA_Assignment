@@ -14,8 +14,7 @@ public class AddPlayerCommandFactory implements CommandFactory {
     private final Stack<Command> redos;
     private final PlayerFactory playerFactory;
 
-    public AddPlayerCommandFactory(Scanner sc, Vector<Team> currentTeam,
-                                    Stack<Command> commands, Stack<Command> redos) {
+    public AddPlayerCommandFactory(Scanner sc, Vector<Team> currentTeam, Stack<Command> commands, Stack<Command> redos) {
         this.sc = sc;
         this.currentTeam = currentTeam;
         this.commands = commands;

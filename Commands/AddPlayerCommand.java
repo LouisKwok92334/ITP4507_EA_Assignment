@@ -8,8 +8,8 @@ public class AddPlayerCommand implements Command {
     private final Scanner sc;
     private final Vector<Team> currentTeam;
     private final PlayerFactory playerFactory;
-    private Player player;
     private int position;
+    private Player player;
     private Team team;
     private final Map<Integer, String> positionDescriptions = new HashMap<>();
 
@@ -18,20 +18,14 @@ public class AddPlayerCommand implements Command {
         this.currentTeam = currentTeam;
         this.playerFactory = playerFactory;
         this.player = null;
+        this.team = null;
         this.position = 0;
     }
 
     @Override
     public void execute() {
-        if (currentTeam.isEmpty()) {
-            System.out.println("Please create a team first!");
-            return;
-        }
-
         // Consume the leftover newline character from previous input reading
-        if (sc.hasNextLine()) {
-            sc.nextLine();
-        }
+        sc.nextLine();
 
         System.out.print("Please input player information (id, name):- ");
         String playerInfo = sc.nextLine();

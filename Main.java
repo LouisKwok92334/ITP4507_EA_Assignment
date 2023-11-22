@@ -20,15 +20,15 @@ public class Main {
         commandFactories.put("x", new ExitCommandFactory());
         commandFactories.put("u", new UndoCommandFactory(commands, redos));
         commandFactories.put("r", new RedoCommandFactory(commands, redos));
-        commandFactories.put("c", new CreateTeamCommandFactory(sc, teams, currentTeam, commands, redos));
-        commandFactories.put("g", new SetCurrentTeamCommandFactory(sc, teams, currentTeam, commands, redos));
+        commandFactories.put("l", new ListCommandFactory(commands, redos));
+        commandFactories.put("s", new ShowTeamCommandFactory(currentTeam));
+        commandFactories.put("p", new DisplayAllTeamsFactory(teams));
+        commandFactories.put("g", new SetCurrentTeamCommandFactory(sc, teams, currentTeam));
         commandFactories.put("a", new AddPlayerCommandFactory(sc, currentTeam, commands, redos));
+        commandFactories.put("c", new CreateTeamCommandFactory(sc, teams, currentTeam, commands, redos));
         commandFactories.put("m", new ModifyPlayerPositionCommandFactory(sc, currentTeam, commands, redos, caretaker));
         commandFactories.put("t", new ChangeTeamNameCommandFactory(sc, currentTeam, commands, redos, caretaker));
         commandFactories.put("d", new DeletePlayerCommandFactory(sc, currentTeam, commands, redos, caretaker));
-        commandFactories.put("l", new ListUndosAndRedosCommandFactory(commands, redos));
-        commandFactories.put("s", new ShowTeamCommandFactory(currentTeam));
-        commandFactories.put("p", new DisplayAllTeamsFactory(teams));
 
         String command;
         Command com;
@@ -44,6 +44,11 @@ public class Main {
             }
             System.out.print("Please enter command [ c | g | a | m | d | s | p | t | u | r | l | x ] :-");
             command = sc.next();
+
+            if (currentTeam.isEmpty() && !command.equals("c") && !command.equals("x")) {
+                System.out.println("Please create a team first!");
+                continue; // Skip the rest of the loop iteration and prompt again
+            }
 
             try {
                 com = commandFactories.get(command).createCommand();

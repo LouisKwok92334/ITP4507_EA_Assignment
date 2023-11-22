@@ -19,11 +19,6 @@ public class DeletePlayerCommand implements Command {
 
     @Override
     public void execute() {
-        if (currentTeam.isEmpty()) {
-            System.out.println("Please create a team first!");
-            return;
-        }
-
         System.out.print("Please input player id:- ");
         String id = sc.next();
 
