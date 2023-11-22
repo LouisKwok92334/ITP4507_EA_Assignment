@@ -11,6 +11,7 @@ public class CreateTeamCommand implements Command {
     private final HashMap<String, TeamFactory> teamFactories;
     private TeamFactory teamFactory;
     private Team team;
+    private Team previousCurrentTeam;
     private String type;
     private String teamID;
     private String teamName;
@@ -28,8 +29,14 @@ public class CreateTeamCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.print("Enter team type (v = volleyball | f = football): ");
+        System.out.print("Enter sport type ( v = volleyball | f = football) :- ");
         type = sc.next().trim().toLowerCase(); // Add trim() to remove any extra whitespace
+
+        if (!currentTeam.isEmpty()) {
+            previousCurrentTeam = currentTeam.get(0);
+        } else {
+            previousCurrentTeam = null;
+        }
 
         teamFactory = teamFactories.get(type);
         if (teamFactory == null) {
@@ -37,26 +44,26 @@ public class CreateTeamCommand implements Command {
             return;
         }
 
-        System.out.print("Team ID: ");
+        System.out.print("Team ID:- ");
         teamID = sc.next().trim();
-        System.out.print("Team Name: ");
+        System.out.print("Team Name:- ");
         teamName = sc.next().trim();
 
         team = teamFactory.createTeam(teamID, teamName);
         teams.add(team);
 
-        if (currentTeam.isEmpty()) {
-            currentTeam.add(team);
-            System.out.println("Current team is changed to " + teamID + ".");
-        }
+        currentTeam.clear();
+        currentTeam.add(team);
+        System.out.println("Current team is changed to " + teamID + ".");
     }
 
     @Override
     public void undo() {
         if (team != null){
             teams.remove(team);
-            if (currentTeam.size() == 1 && currentTeam.get(0) == team) {
-                currentTeam.remove(0);
+            currentTeam.clear();
+            if (previousCurrentTeam != null) {
+                currentTeam.add(previousCurrentTeam);  // Restore the previous current team
             }
         }
     }
@@ -65,9 +72,8 @@ public class CreateTeamCommand implements Command {
     public void redo() {
         if (team != null){
             teams.add(team);
-            if (currentTeam.isEmpty()) {
-                currentTeam.add(team);
-            }
+            currentTeam.clear();
+            currentTeam.add(team);
         }
     }
 

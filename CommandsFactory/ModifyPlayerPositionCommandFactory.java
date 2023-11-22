@@ -24,30 +24,7 @@ public class ModifyPlayerPositionCommandFactory implements CommandFactory {
 
     @Override
     public Command createCommand() {
-        Map<Integer, String> positionDescriptions = new HashMap<>();
-        StringBuilder positionDescription = new StringBuilder("Position (");
-
-        if (currentTeam.firstElement() instanceof FootballTeam) {
-            positionDescriptions.put(1, "goal keeper");
-            positionDescriptions.put(2, "defender");
-            positionDescriptions.put(3, "midfielder");
-            positionDescriptions.put(4, "forward");
-        } else if (currentTeam.firstElement() instanceof VolleyballTeam) {
-            positionDescriptions.put(1, "attacker");
-            positionDescriptions.put(2, "defender");
-        }
-
-        // Build the position string
-        for (Map.Entry<Integer, String> entry : positionDescriptions.entrySet()) {
-            positionDescription.append(String.format("%d = %s | ", entry.getKey(), entry.getValue()));
-        }
-        positionDescription.setLength(positionDescription.length() - 3);
-        positionDescription.append("):- ");
-
-        // Print the positions
-        System.out.println(positionDescription);
-
-        Command com = new ModifyPlayerPositionCommand(sc, currentTeam, positionDescriptions, caretaker);
+        Command com = new ModifyPlayerPositionCommand(sc, currentTeam, caretaker);
         commands.push(com);
         redos.clear();
         return com;

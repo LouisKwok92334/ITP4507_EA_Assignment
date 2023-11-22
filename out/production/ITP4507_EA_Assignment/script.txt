@@ -1,0 +1,69 @@
+java Main
+c
+v
+T001
+TYV
+a
+p001, peter pang
+1
+a
+p002, john law
+2
+s
+c
+f
+T102
+KCF
+p
+a
+p101, albert fung
+1
+a
+p102, jacob wong
+2
+a
+p103, chris lee
+3
+a
+p104, robert chan
+4
+s
+g
+T001
+p
+a
+p003, ming chan
+1
+s
+m
+p001
+2
+s
+d
+p001
+s
+t
+STV
+s
+l
+u
+s
+u
+s
+u
+s
+u
+u
+s
+u
+u
+u
+u
+g
+T102
+l
+r
+r
+s
+l
+x

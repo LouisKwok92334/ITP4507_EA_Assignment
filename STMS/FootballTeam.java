@@ -63,9 +63,12 @@ public class FootballTeam extends Team {
             players[player.getPosition() - 1] += "\n" + player.getPlayerID() + ", " + player.getName();
         }
 
-        System.out.println("Football Team " + getTeamID() + " (" + getName() + ")");
+        System.out.println("Football Team " + getName() + " (" + getTeamID() + ")");
 
         for (int i = 0; i < positions.length; i++) {
+            if (players[i].isEmpty()) {
+                players[i] = "NIL";
+            }
             System.out.println("\n" + positions[i] + ":" + players[i]);
         }
     }

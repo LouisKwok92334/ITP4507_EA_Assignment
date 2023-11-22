@@ -1,5 +1,6 @@
 package Commands;
 
+import Mementos.*;
 import STMS.*;
 import java.util.*;
 
@@ -7,10 +8,12 @@ public class DeletePlayerCommand implements Command {
     private final Scanner sc;
     private final Vector<Team> currentTeam;
     private Player player;
+    private final Caretaker caretaker;
 
-    public DeletePlayerCommand(Scanner sc, Vector<Team> currentTeam) {
+    public DeletePlayerCommand(Scanner sc, Vector<Team> currentTeam, Caretaker caretaker) {
         this.sc = sc;
         this.currentTeam = currentTeam;
+        this.caretaker = caretaker;
         this.player = null;
     }
 
@@ -37,19 +40,28 @@ public class DeletePlayerCommand implements Command {
             System.out.println("Player not found!");
             return;
         }
-
+        caretaker.saveTeam(currentTeam, currentTeam.get(0).getTeamID(), currentTeam.get(0).getName(),
+                currentTeam.get(0).getAllPlayers());
         currentTeam.get(0).remove(player);
         System.out.println("Player is deleted.");
     }
 
     @Override
     public void undo() {
-        currentTeam.get(0).addPlayer(player);
+        if (caretaker.getUndoListSize() > 0) {
+            caretaker.saveTeam_redo(currentTeam, currentTeam.get(0).getTeamID(), currentTeam.get(0).getName(),
+                    currentTeam.get(0).getAllPlayers());
+            caretaker.undo();
+        }
     }
 
     @Override
     public void redo() {
-        currentTeam.get(0).remove(player);
+        if (caretaker.getRedoListSize() > 0) {
+            caretaker.saveTeam(currentTeam, currentTeam.get(0).getTeamID(), currentTeam.get(0).getName(),
+                    currentTeam.get(0).getAllPlayers());
+            caretaker.redo();
+        }
     }
 
     public String toString() {

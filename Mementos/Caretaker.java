@@ -22,13 +22,13 @@ public class Caretaker {
         redoStack.push(memento);
     }
 
-    public void saveTeamName(Vector<Team> team) {
-        Memento memento = new TeamMemento(team);
+    public void saveTeam(Vector<Team> team, String teamID, String name, Enumeration<Player> players) {
+        Memento memento = new TeamMemento(team, teamID, name, players);
         undoStack.push(memento);
     }
 
-    public void saveTeamName_redo(Vector<Team> team) {
-        Memento memento = new TeamMemento(team);
+    public void saveTeam_redo(Vector<Team> team, String teamID, String name, Enumeration<Player> players) {
+        Memento memento = new TeamMemento(team, teamID, name, players);
         redoStack.push(memento);
     }
 

@@ -25,7 +25,7 @@ public class Main {
         commandFactories.put("a", new AddPlayerCommandFactory(sc, currentTeam, commands, redos));
         commandFactories.put("m", new ModifyPlayerPositionCommandFactory(sc, currentTeam, commands, redos, caretaker));
         commandFactories.put("t", new ChangeTeamNameCommandFactory(sc, currentTeam, commands, redos, caretaker));
-        commandFactories.put("d", new DeletePlayerCommandFactory(sc, currentTeam, commands, redos));
+        commandFactories.put("d", new DeletePlayerCommandFactory(sc, currentTeam, commands, redos, caretaker));
         commandFactories.put("l", new ListUndosAndRedosCommandFactory(commands, redos));
         commandFactories.put("s", new ShowTeamCommandFactory(currentTeam));
         commandFactories.put("p", new DisplayAllTeamsFactory(teams));

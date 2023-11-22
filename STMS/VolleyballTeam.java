@@ -50,21 +50,30 @@ public class VolleyballTeam extends Team {
 
     public void displayTeam() {
         String[] positions = { "Attackers", "Defenders" };
-        String[] players = new String[positions.length];
-        Arrays.fill(players, "");
+        StringBuilder[] players = new StringBuilder[positions.length];
+        for (int i = 0; i < players.length; i++) {
+            players[i] = new StringBuilder();
+        }
 
         Enumeration<Player> allPlayers = getAllPlayers();
         Player player;
 
         while (allPlayers.hasMoreElements()) {
             player = allPlayers.nextElement();
-            players[player.getPosition() - 1] += "\n" + player.getPlayerID() + ", " + player.getName();
+            if (players[player.getPosition() - 1].length() > 0) {
+                players[player.getPosition() - 1].append("\n");
+            }
+            players[player.getPosition() - 1].append(player.getPlayerID()).append(", ").append(player.getName());
         }
 
-        System.out.println("Volleyball Team " + getTeamID() + " (" + getName() + ")");
+        System.out.println("Volleyball Team " + getName() + " (" + getTeamID() + ")");
 
         for (int i = 0; i < positions.length; i++) {
-            System.out.println("\n" + positions[i] + ":" + players[i]);
+            if (players[i].length() == 0) {
+                players[i] = new StringBuilder("NIL");
+            }
+            System.out.println(positions[i] + ":");
+            System.out.println(players[i]);
         }
     }
 }

@@ -10,12 +10,11 @@ public class ModifyPlayerPositionCommand implements Command {
     private final Caretaker caretaker;
     private Player player;
     private int position;
-    private final Map<Integer, String> positionDescriptions;
+    private final Map<Integer, String> positionDescriptions = new HashMap<>();
 
-    public ModifyPlayerPositionCommand(Scanner sc, Vector<Team> currentTeam, Map<Integer, String> positionDescriptions, Caretaker caretaker) {
+    public ModifyPlayerPositionCommand(Scanner sc, Vector<Team> currentTeam, Caretaker caretaker) {
         this.sc = sc;
         this.currentTeam = currentTeam;
-        this.positionDescriptions = positionDescriptions;
         this.caretaker = caretaker;
         this.position = 0;
     }
@@ -27,35 +26,42 @@ public class ModifyPlayerPositionCommand implements Command {
             return;
         }
 
-        Enumeration<Player> players = currentTeam.firstElement().getAllPlayers();
         System.out.print("Please input player ID:- ");
         String playerID = sc.next();
 
+        Enumeration<Player> players = currentTeam.firstElement().getAllPlayers();
         while (players.hasMoreElements()) {
             Player player = players.nextElement();
             if (playerID.equals(player.getPlayerID())) {
                 this.player = player;
-
-                // Save the state before modification
                 caretaker.savePlayerPosition(player);
 
-                for (Map.Entry<Integer, String> entry : positionDescriptions.entrySet()) {
-                    System.out.printf("%d = %s | ", entry.getKey(), entry.getValue());
+                if (currentTeam.firstElement() instanceof FootballTeam) {
+                    positionDescriptions.put(1, "goal keeper");
+                    positionDescriptions.put(2, "defender");
+                    positionDescriptions.put(3, "midfielder");
+                    positionDescriptions.put(4, "forward");
+                } else if (currentTeam.firstElement() instanceof VolleyballTeam) {
+                    positionDescriptions.put(1, "attacker");
+                    positionDescriptions.put(2, "defender");
                 }
-                System.out.println();
+
+                StringBuilder positionDescription = new StringBuilder("Position (");
+                for (Map.Entry<Integer, String> entry : positionDescriptions.entrySet()) {
+                    positionDescription.append(String.format("%d = %s | ", entry.getKey(), entry.getValue()));
+                }
+
+                positionDescription.setLength(positionDescription.length() - 3);
+                positionDescription.append("):- ");
+                System.out.print(positionDescription);
 
                 position = sc.nextInt();
-
-                // Modify the player's position
                 player.setPosition(position);
                 caretaker.clearRedoStack();
-
                 System.out.println("Position is updated.");
-                return; // Exit after modifying the player
+                return;
             }
         }
-
-        // If the loop completes without finding the player, we print an error message
         System.out.println("Player not found.");
     }
 

@@ -23,9 +23,6 @@ public class SetCurrentTeamCommandFactory implements CommandFactory {
 
     @Override
     public Command createCommand() {
-        Command com = new SetCurrentTeamCommand(sc, teams, currentTeam);
-        commands.push(com);
-        redos.clear();
-        return com;
+        return new SetCurrentTeamCommand(sc, teams, currentTeam);
     }
 }
