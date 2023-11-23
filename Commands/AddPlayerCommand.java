@@ -81,6 +81,7 @@ public class AddPlayerCommand implements Command {
         team.addPlayer(player);
     }
 
+    // Method to return a string representation of the command.
     public String toString() {
         String positionDescription = positionDescriptions.get(position);
         return "Add player, " + player.getPlayerID() + ", " + player.getName() + ", " + positionDescription;

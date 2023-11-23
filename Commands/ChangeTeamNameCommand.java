@@ -1,8 +1,7 @@
 package Commands;
 
-import Mementos.Caretaker;
+import Mementos.*;
 import STMS.Team;
-
 import java.util.*;
 
 public class ChangeTeamNameCommand implements Command {
@@ -52,6 +51,7 @@ public class ChangeTeamNameCommand implements Command {
         }
     }
 
+    // Method to return a string representation of the command.
     public String toString() {
         return "Change team's name, " + currentTeam.firstElement().getTeamID() + ", " + currentTeam.firstElement().getName();
     }

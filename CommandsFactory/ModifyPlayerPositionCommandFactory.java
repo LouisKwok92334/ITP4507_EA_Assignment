@@ -3,7 +3,6 @@ package CommandsFactory;
 import Commands.*;
 import Mementos.*;
 import STMS.*;
-
 import java.util.*;
 
 public class ModifyPlayerPositionCommandFactory implements CommandFactory {

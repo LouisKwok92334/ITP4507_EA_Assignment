@@ -76,6 +76,7 @@ public class ModifyPlayerPositionCommand implements Command {
         }
     }
 
+    // Method to return a string representation of the command.
     @Override
     public String toString() {
         String positionDescription = positionDescriptions.get(position);

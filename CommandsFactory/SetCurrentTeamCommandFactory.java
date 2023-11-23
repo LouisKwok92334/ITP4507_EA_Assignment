@@ -1,8 +1,7 @@
 package CommandsFactory;
 
 import Commands.*;
-import STMS.Team;
-
+import STMS.*;
 import java.util.*;
 
 public class SetCurrentTeamCommandFactory implements CommandFactory {
