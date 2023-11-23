@@ -8,10 +8,10 @@ public class AddPlayerCommand implements Command {
     private final Scanner sc;
     private final Vector<Team> currentTeam;
     private final PlayerFactory playerFactory;
-    private int position;
+    private final Map<Integer, String> positionDescriptions = new HashMap<>();
     private Player player;
     private Team team;
-    private final Map<Integer, String> positionDescriptions = new HashMap<>();
+    private int position;
 
     public AddPlayerCommand(Scanner sc, Vector<Team> currentTeam, PlayerFactory playerFactory) {
         this.sc = sc;
