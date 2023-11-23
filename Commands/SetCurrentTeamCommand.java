@@ -28,7 +28,7 @@ public class SetCurrentTeamCommand implements Command {
             }
         }
 
-        System.out.println("Team ID " + teamID + " not found!!");
+        System.out.println("Team " + teamID + " not found!!");
     }
 
     @Override
